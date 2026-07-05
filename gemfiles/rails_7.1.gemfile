@@ -1,0 +1,11 @@
+# frozen_string_literal: true
+
+# Pins the Rails stack to 7.1 (the gem's declared floor) for CI. The runtime
+# and dev dependencies still come from the gemspec.
+source "https://rubygems.org"
+
+gemspec path: ".."
+
+gem "activerecord", "~> 7.1.0"
+gem "activesupport", "~> 7.1.0"
+gem "railties", "~> 7.1.0"

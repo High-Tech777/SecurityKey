@@ -1,0 +1,31 @@
+module Passkeyed
+  class Configuration
+    USER_VERIFICATION_LEVELS: Array[String]
+
+    attr_accessor rp_name: String
+    attr_accessor rp_id: String?
+    attr_accessor allowed_origins: Array[String]?
+    attr_reader user_verification: String
+    attr_accessor session_key: Symbol
+    attr_reader challenge_timeout: Integer
+
+    def initialize: () -> void
+    def user_verification=: (untyped value) -> String
+    def challenge_timeout=: (untyped value) -> Integer
+    def registration_challenge_key: () -> Symbol
+    def authentication_challenge_key: () -> Symbol
+    # WebAuthn::RelyingParty (webauthn-ruby ships no RBS, so left untyped).
+    def relying_party: () -> untyped
+    def validate!: () -> void
+
+    private
+
+    def enforce_secure_origins?: () -> bool
+  end
+
+  def self.base_record_class: () -> untyped
+  def self.base_record_class=: (untyped) -> untyped
+  def self.configuration: () -> Configuration
+  def self.configure: () ?{ (Configuration) -> void } -> Configuration
+  def self.reset_configuration!: () -> Configuration
+end

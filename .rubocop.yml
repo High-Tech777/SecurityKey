@@ -1,0 +1,43 @@
+plugins:
+  - rubocop-minitest
+  - rubocop-rake
+
+AllCops:
+  TargetRubyVersion: 3.1
+  NewCops: enable
+  Exclude:
+    - "vendor/**/*"
+    - "tmp/**/*"
+    - "bin/**/*"
+    - "lib/generators/**/templates/**/*"
+
+# The gem deliberately uses double quotes everywhere.
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+Style/StringLiteralsInInterpolation:
+  EnforcedStyle: double_quotes
+
+# Favor readable, well-documented code over strict metric limits.
+Style/Documentation:
+  Enabled: false
+
+Metrics/MethodLength:
+  Max: 25
+
+Metrics/AbcSize:
+  Max: 30
+
+# Ceremonies deliberately keeps both WebAuthn ceremonies (and their session,
+# metadata, and instrumentation plumbing) in one readable module.
+Metrics/ModuleLength:
+  Max: 150
+
+Gemspec/DevelopmentDependencies:
+  Enabled: false
+
+# Tests legitimately make several assertions and grow long.
+Metrics/ClassLength:
+  Exclude:
+    - "test/**/*"
+Minitest/MultipleAssertions:
+  Enabled: false

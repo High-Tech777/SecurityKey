@@ -1,0 +1,52 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    name: test (ruby ${{ matrix.ruby }}, ${{ matrix.gemfile }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # Cover the declared floor (Rails 7.1, Ruby 3.1) through the latest.
+        # Ruby 3.1 pairs only with Rails 7.x, since Rails 8 requires Ruby >= 3.2.
+        include:
+          - { ruby: "3.1", gemfile: "gemfiles/rails_7.1.gemfile" }
+          - { ruby: "3.2", gemfile: "gemfiles/rails_7.2.gemfile" }
+          - { ruby: "3.3", gemfile: "gemfiles/rails_8.0.gemfile" }
+          - { ruby: "3.3", gemfile: "Gemfile" }
+          - { ruby: "3.4", gemfile: "Gemfile" }
+    env:
+      BUNDLE_GEMFILE: ${{ matrix.gemfile }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true
+      - run: bundle exec rake test
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.4"
+          bundler-cache: true
+      - run: bundle exec rubocop
+
+  javascript:
+    name: test (stimulus controller)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      # No dependencies to install: the tests stub the controller's imports.
+      - run: node --test test/javascript/*.test.mjs

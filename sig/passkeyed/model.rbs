@@ -1,0 +1,16 @@
+module Passkeyed
+  module Model
+    extend ActiveSupport::Concern
+
+    def passkey_name: () -> String
+    def passkey_display_name: () -> String
+    def rename_passkey: (untyped credential_id, String? nickname) -> untyped
+    def revoke_passkey: (untyped credential_id) -> untyped
+    def passkeyed_webauthn_id!: () -> String
+
+    private
+
+    def assign_passkeyed_webauthn_id: () -> void
+    def ensure_webauthn_id_column!: () -> void
+  end
+end

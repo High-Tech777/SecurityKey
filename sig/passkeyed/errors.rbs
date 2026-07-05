@@ -1,0 +1,22 @@
+module Passkeyed
+  class Error < StandardError
+  end
+
+  class RegistrationError < Error
+  end
+
+  class AuthenticationError < Error
+  end
+
+  class CredentialNotFound < AuthenticationError
+  end
+
+  class ChallengeMissing < Error
+  end
+
+  class ChallengeExpired < ChallengeMissing
+  end
+
+  class ConfigurationError < Error
+  end
+end
