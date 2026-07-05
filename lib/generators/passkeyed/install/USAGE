@@ -1,0 +1,14 @@
+Description:
+    Installs passkeyed: adds the passkeyed_credentials table and a webauthn_id
+    column on the owner model, an initializer, the passkey Stimulus controller,
+    and includes Passkeyed::Model in the owner model.
+
+Example:
+    bin/rails generate passkeyed:install
+    bin/rails generate passkeyed:install --user=Account
+
+    This will create:
+        db/migrate/XXXXXXXX_create_passkeyed_credentials.rb
+        config/initializers/passkeyed.rb
+        app/javascript/controllers/passkey_controller.js
+    And inject `include Passkeyed::Model` into the owner model.

@@ -1,0 +1,22 @@
+module Passkeyed
+  module Ceremonies
+    def passkey_registration_options: (untyped user) -> untyped
+    def passkey_register!: (untyped user, untyped credential, ?nickname: String?) -> untyped
+    def passkey_authentication_options: () -> untyped
+    def passkey_authenticate!: (untyped credential) -> untyped
+
+    private
+
+    def after_passkey_registration: (untyped credential) -> void
+    def after_passkey_authentication: (untyped credential, untyped user) -> void
+    def verify_registration: (untyped user, untyped credential, ?nickname: String?) -> untyped
+    def verify_authentication: (untyped credential) -> untyped
+    def passkeyed_session: () -> untyped
+    def stash_challenge: (Symbol key, String challenge) -> void
+    def consume_challenge: (Symbol key, String ceremony) -> String
+    def credential_metadata: (untyped webauthn_credential) -> Hash[Symbol, untyped]
+    def passkeyed_user_verification?: () -> bool
+    def parse_credential: (Symbol method, untyped credential, untyped error_class) -> untyped
+    def normalize_credential: (untyped credential) -> untyped
+  end
+end
